@@ -165,6 +165,7 @@ static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
 static void enternotify(XEvent *e);
+static void col(Monitor *);
 static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
@@ -734,8 +735,10 @@ drawbar(Monitor *m)
 
 	if ((w = m->ww - sw - x) > bh) {
 		if (m->sel) {
+			int mid = (m->ww - TEXTW(m->sel->name)) / 2 - x;
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-			drw_text(drw, x, 0, w - 2 * sp, bh, lrpad / 2, m->sel->name, 0);
+			drw_text(drw, x, 0, w - 2 * sp, bh, lrpad / 2, m->sel->name, 0);  /*toggle these to toggle center window name or not*/
+			/*drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);*/
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
@@ -1685,6 +1688,32 @@ tagmon(const Arg *arg)
 	if (!selmon->sel || !mons->next)
 		return;
 	sendmon(selmon->sel, dirtomon(arg->i));
+}
+
+
+void
+col(Monitor *m) {
+	unsigned int i, n, h, w, x, y,mw;
+	Client *c;
+
+	for(n = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), n++);
+	if(n == 0)
+		return;
+    if(n > m->nmaster)
+        mw = m->nmaster ? m->ww * m->mfact : 0;
+    else
+        mw = m->ww - m->gappx;
+	for (i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+		if (i < m->nmaster) {
+		    w = (mw - x) / (MIN(n, m->nmaster)-i) - m->gappx;
+            resize(c, m->wx + x + m->gappx, m->wy + m->gappx    , w - (2*c->bw) - m->gappx, m->wh - 2*m->gappx - (2*c->bw), False);
+			x += WIDTH(c) + m->gappx;
+		} else {
+			h = (m->wh - y) / (n - i) - m->gappx;
+			resize(c, x + m->wx + m->gappx, m->wy + y + m->gappx, m->ww - x  - (2*c->bw) - 2*m->gappx, h - m->gappx - (2*c->bw), False);
+			y += HEIGHT(c) + m->gappx;
+		}
+	}
 }
 
 void

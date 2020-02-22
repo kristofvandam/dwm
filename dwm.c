@@ -1706,11 +1706,25 @@ col(Monitor *m) {
 	for (i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
 		if (i < m->nmaster) {
 		    w = (mw - x) / (MIN(n, m->nmaster)-i) - m->gappx;
-            resize(c, m->wx + x + m->gappx, m->wy + m->gappx    , w - (2*c->bw) - m->gappx, m->wh - 2*m->gappx - (2*c->bw), False);
+            resize(
+            	c, 
+            	m->wx + x + m->gappx, 
+            	m->wy + y + m->gappx, 
+            	w - (2*c->bw),
+            	m->wh - (2*c->bw) - 2*m->gappx, 
+            	0
+            );
 			x += WIDTH(c) + m->gappx;
 		} else {
 			h = (m->wh - y) / (n - i) - m->gappx;
-			resize(c, x + m->wx + m->gappx, m->wy + y + m->gappx, m->ww - x  - (2*c->bw) - 2*m->gappx, h - m->gappx - (2*c->bw), False);
+			resize(
+				c,
+				m->wx + x + m->gappx,
+				m->wy + y + m->gappx,
+				m->ww - x - (2*c->bw) - 2*m->gappx,
+				h - (2*c->bw) - m->gappx,
+				0
+			);
 			y += HEIGHT(c) + m->gappx;
 		}
 	}
@@ -1733,11 +1747,25 @@ tile(Monitor *m)
 	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
 			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
-			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
+			resize(
+				c,
+				m->wx + m->gappx,
+				m->wy + my,
+				mw - (2*c->bw) - m->gappx,
+				h - (2*c->bw),
+				0
+			);
 			my += HEIGHT(c) + m->gappx;
 		} else {
 			h = (m->wh - ty) / (n - i) - m->gappx;
-			resize(c, m->wx + mw + m->gappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappx, h - (2*c->bw), 0);
+			resize(
+				c,
+				m->wx + mw + m->gappx,
+				m->wy + ty,
+				m->ww - mw - (2*c->bw) - 2*m->gappx,
+				h - (2*c->bw),
+				0
+			);
 			ty += HEIGHT(c) + m->gappx;
 		}
 }

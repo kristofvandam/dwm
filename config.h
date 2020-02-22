@@ -62,12 +62,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *roficmd[]  = { "rofi", "-show", "run" };
-static const char *termcmd[]  = { "tilix", NULL };
+static const char *dmenucmd[]        = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *roficmd[]         = { "rofi", "-show", "run" };
+static const char *brightness_up[]   = { "xbacklight", "-inc", "10", NULL };
+static const char *brightness_down[] = { "xbacklight", "-dec", "10", NULL };
+static const char *termcmd[]         = { "tilix", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ 0,                            0x1008ff02,spawn,          {.v = brightness_up } },
+	{ 0,                            0x1008ff03,spawn,          {.v = brightness_down } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },

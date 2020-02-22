@@ -1703,13 +1703,13 @@ col(Monitor *m) {
         mw = m->nmaster ? m->ww * m->mfact : 0;
     else
         mw = m->ww - m->gappx;
-	for (i = x = y = 0, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
+	for (i = x = y = 0, y = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++) {
 		if (i < m->nmaster) {
 		    w = (mw - x) / (MIN(n, m->nmaster)-i) - m->gappx;
             resize(
             	c, 
             	m->wx + x + m->gappx, 
-            	m->wy + y + m->gappx, 
+            	m->wy + y, 
             	w - (2*c->bw),
             	m->wh - (2*c->bw) - 2*m->gappx, 
             	0
@@ -1720,9 +1720,9 @@ col(Monitor *m) {
 			resize(
 				c,
 				m->wx + x + m->gappx,
-				m->wy + y + m->gappx,
+				m->wy + y,
 				m->ww - x - (2*c->bw) - 2*m->gappx,
-				h - (2*c->bw) - m->gappx,
+				h - (2*c->bw),
 				0
 			);
 			y += HEIGHT(c) + m->gappx;

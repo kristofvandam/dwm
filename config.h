@@ -8,18 +8,26 @@ static const int showbar            = 1;       /* 0 means no bar */
 static const int topbar             = 1;       /* 0 means bottom bar */
 static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
-static const char *fonts[]          = { "CozetteVector:size=14" };
-static const char dmenufont[]       = "CozetteVector:size=14";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
+static const char *fonts[]          = { "DroidSansMono:size=14" };
+static const char dmenufont[]       = "DroidSansMono:size=14";
+static const char col_white[]       = "#ffffff";
+static const char col_black[]       = "#000000";
+static const char col_primary[]     = "#2d2d2d";
+static const char col_selected[]    = "#b7ed24";
+static const char col_unselected[]  = "#2d2d2d";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#2D2D2D";
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
-};
+	/*               	 fg          bg               border   */
+	[SchemeNorm]     = { col_white , col_primary    , col_primary } ,
+	[SchemeSel]      = { col_black , col_cyan       , col_cyan    } ,
+	[SchemeStatus]   = { col_white , col_primary    , "#000000"   } , // Statusbar right {text            , background , not used but cannot be empty }
+	[SchemeTagsSel]  = { col_black , col_selected   , "#000000"   } , // Tagbar left selected {text       , background , not used but cannot be empty }
+	[SchemeTagsNorm] = { col_white , col_unselected , "#000000"   } , // Tagbar left unselected {text     , background , not used but cannot be empty }
+	[SchemeInfoSel]  = { col_white , col_cyan       , "#009900"   } , // infobar middle  selected {text   , background , not used but cannot be empty }
+	[SchemeInfoNorm] = { col_white , col_primary    , "#000000"   } , // infobar middle  unselected {text , background , not used but cannot be empty }
+                                                              } ;
 
 /* tagging */
 static const char *tags[] = { "TERM", "DEV", "BROWSE", "MISC" };
@@ -62,7 +70,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]        = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[]        = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_primary, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[]         = { "rofi", "-show", "run" };
 static const char *brightness_up[]   = { "xbacklight", "-inc", "10", NULL };
 static const char *brightness_down[] = { "xbacklight", "-dec", "10", NULL };

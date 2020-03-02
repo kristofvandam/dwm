@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 0;       /* border pixel of windows */
+static const unsigned int borderpx  = 2;       /* border pixel of windows */
 static const unsigned int gappx     = 15;      /* gaps between windows */
 static const unsigned int snap      = 32;      /* snap pixel */
 static const int showbar            = 1;       /* 0 means no bar */
@@ -13,15 +13,15 @@ static const char dmenufont[]       = "DroidSansMono:size=14";
 static const char col_white[]       = "#ffffff";
 static const char col_black[]       = "#000000";
 static const char col_primary[]     = "#2d2d2d";
-static const char col_selected[]    = "#b7ed24";
+static const char col_selected[]    = "#ede480"; /*green: b7ed24*/
 static const char col_unselected[]  = "#2d2d2d";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#2D2D2D";
 static const char *colors[][3]      = {
 	/*               	 fg          bg               border   */
-	[SchemeNorm]     = { col_white , col_primary    , col_primary } ,
-	[SchemeSel]      = { col_black , col_cyan       , col_cyan    } ,
+	[SchemeNorm]     = { col_white , col_primary    , col_white   } ,
+	[SchemeSel]      = { col_black , col_cyan       , col_white   } ,
 	[SchemeStatus]   = { col_white , col_primary    , "#000000"   } , // Statusbar right {text            , background , not used but cannot be empty }
 	[SchemeTagsSel]  = { col_black , col_selected   , "#000000"   } , // Tagbar left selected {text       , background , not used but cannot be empty }
 	[SchemeTagsNorm] = { col_white , col_unselected , "#000000"   } , // Tagbar left unselected {text     , background , not used but cannot be empty }
@@ -84,6 +84,7 @@ NULL };
 static const char *roficmd[]         = { 
 	"rofi",
 	"-show", "run",
+	"-theme", "/home/kristof/Projects/rice/dwm/slate.rosi",
 NULL };
 static const char *brightness_up[]   = { "xbacklight", "-inc", "10", NULL };
 static const char *brightness_down[] = { "xbacklight", "-dec", "10", NULL };

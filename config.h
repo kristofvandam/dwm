@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;       /* border pixel of windows */
+static const unsigned int borderpx  = 0;       /* border pixel of windows */
 static const unsigned int gappx     = 15;      /* gaps between windows */
 static const unsigned int snap      = 32;      /* snap pixel */
 static const int showbar            = 1;       /* 0 means no bar */
@@ -10,10 +10,10 @@ static const int vertpad            = 0;       /* vertical padding of bar */
 static const int sidepad            = 0;       /* horizontal padding of bar */
 static const char *fonts[]          = { "DroidSansMono:size=14" };
 static const char dmenufont[]       = "DroidSansMono:size=14";
-static const char col_white[]       = "#ffffff";
+static const char col_white[]       = "#9d9d9d";
 static const char col_black[]       = "#000000";
 static const char col_primary[]     = "#2d2d2d";
-static const char col_selected[]    = "#ede480"; /*green: b7ed24*/
+static const char col_selected[]    = "#ede480"; /*green: oob7ed24*/
 static const char col_unselected[]  = "#2d2d2d";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
@@ -27,7 +27,7 @@ static const char *colors[][3]      = {
 	[SchemeTagsNorm] = { col_white , col_unselected , "#000000"   } , // Tagbar left unselected {text     , background , not used but cannot be empty }
 	[SchemeInfoSel]  = { col_white , col_cyan       , "#009900"   } , // infobar middle  selected {text   , background , not used but cannot be empty }
 	[SchemeInfoNorm] = { col_white , col_primary    , "#000000"   } , // infobar middle  unselected {text , background , not used but cannot be empty }
-                                                              } ;
+};
 
 /* tagging */
 static const char *tags[] = { "TERM", "DEV", "BROWSE", "MISC" };
@@ -81,9 +81,14 @@ static const char *dmenucmd[]        = {
 	"-sf", col_gray4,
 NULL };
 
-static const char *roficmd[]         = { 
+static const char *rofiruncmd[]         = { 
 	"rofi",
 	"-show", "run",
+	"-theme", "/home/kristof/Projects/rice/dwm/slate.rosi",
+NULL };
+static const char *rofiwindowcmd[]         = { 
+	"rofi",
+	"-show", "window",
 	"-theme", "/home/kristof/Projects/rice/dwm/slate.rosi",
 NULL };
 static const char *brightness_up[]   = { "xbacklight", "-inc", "10", NULL };
@@ -94,7 +99,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ 0,                            0x1008ff02,spawn,          {.v = brightness_up } },
 	{ 0,                            0x1008ff03,spawn,          {.v = brightness_down } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = roficmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = rofiruncmd } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = rofiwindowcmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
